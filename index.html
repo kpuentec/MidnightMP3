@@ -3,9 +3,44 @@
 <head>
   <title>Midnight MP3</title>
 </head>
-<body style="text-align:center; font-family:sans-serif;">
-  <h1> MP3 Player</h1>
-  <button id="playBtn">Select & Play</button>
+<body style="margin:0;">
+
+
+  <div id="titlebar"
+       style="
+         -webkit-app-region: drag;
+         width: 100%;
+         height: 30px;
+         background-color: #ffffff;
+         display: flex;
+         justify-content: flex-end;
+         align-items: center;
+         user-select: none;
+       ">
+
+    <button id="quitBtn"
+            title="Quit"
+            style="
+              -webkit-app-region: no-drag;
+              background: transparent;
+              border: none;
+              color: rgb(0, 0, 0);
+              font-size: 18px;
+              cursor: pointer;
+              padding: 0 10px;
+              height: 30px;
+              line-height: 30px;
+            ">
+      ✕
+    </button>
+  </div>
+
+  <h2 id="trackLabel" style="text-align:center; font-family:sans-serif;">No music selected</h2>
+  <div style="text-align:center;">
+    <button id="playBtn">Select and Play</button>
+    <button id="pauseToggleBtn">Pause</button>
+    <button id="stopBtn">Stop</button>
+  </div>
 
   <script src="renderer.js"></script>
 </body>
