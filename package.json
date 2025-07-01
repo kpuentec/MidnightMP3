@@ -1,0 +1,21 @@
+{
+  "name": "midnightmp3",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [
+    "python",
+    "electron",
+    "mp3",
+    "music"
+  ],
+  "author": "kpuentec",
+  "license": "MIT",
+  "description": "Stylish desktop MP3 Player built with Electron + Python",
+  "dependencies": {
+    "@electron/remote": "^2.1.2",
+    "electron": "^37.1.0"
+  }
+}
