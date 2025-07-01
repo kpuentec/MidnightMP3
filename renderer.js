@@ -2,16 +2,28 @@ const { dialog } = require('@electron/remote');
 const { spawn } = require('child_process');
 const path = require('path');
 
-
 let playerProcess = null;
 let isPaused = false;
 
 const trackLabel = document.getElementById('trackLabel');
-const playBtn = document.getElementById('playBtn');
-const pauseToggleBtn = document.getElementById('pauseToggleBtn');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const selectBtn = document.getElementById('selectBtn');
 const stopBtn = document.getElementById('stopBtn');
 const quitBtn = document.getElementById('quitBtn');
 
+function autoResizeTrackLabel() {
+  const label = document.getElementById('trackLabel');
+  const maxFontSize = 32;
+  const minFontSize = 12;
+  let fontSize = maxFontSize;
+
+  label.style.fontSize = fontSize + 'px';
+
+  while (label.scrollWidth > label.clientWidth && fontSize > minFontSize) {
+    fontSize--;
+    label.style.fontSize = fontSize + 'px';
+  }
+}
 
 function sendToPlayer(command) {
   if (playerProcess && playerProcess.stdin.writable) {
@@ -25,10 +37,16 @@ function setTrackLabel(filepath) {
   } else {
     trackLabel.textContent = path.basename(filepath, path.extname(filepath));
   }
+
+  autoResizeTrackLabel();
 }
 
-function updatePauseButtonText() {
-  pauseToggleBtn.textContent = isPaused ? 'Resume' : 'Pause';
+function updatePlayPauseButton() {
+  if (!playerProcess || isPaused) {
+    playPauseBtn.style.backgroundImage = "url('assets/playbutton1.png')";
+  } else {
+    playPauseBtn.style.backgroundImage = "url('assets/pausebutton2.png')";
+  }
 }
 
 function initPlayerProcess() {
@@ -45,13 +63,13 @@ function initPlayerProcess() {
 
     if (msg.includes('PAUSED')) {
       isPaused = true;
-      updatePauseButtonText();
+      updatePlayPauseButton();
     } else if (msg.includes('RESUMED')) {
       isPaused = false;
-      updatePauseButtonText();
+      updatePlayPauseButton();
     } else if (msg.includes('STOPPED')) {
       isPaused = false;
-      updatePauseButtonText();
+      updatePlayPauseButton();
       setTrackLabel(null);
     }
   });
@@ -64,16 +82,21 @@ function initPlayerProcess() {
     console.log("Player process closed");
     playerProcess = null;
     isPaused = false;
-    updatePauseButtonText();
+    updatePlayPauseButton();
     setTrackLabel(null);
   });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  updatePauseButtonText();
+  updatePlayPauseButton();
   setTrackLabel(null);
 
-  playBtn.addEventListener('click', async () => {
+  playPauseBtn.addEventListener('click', () => {
+    if (!playerProcess) return;
+    sendToPlayer(isPaused ? 'resume' : 'pause');
+  });
+
+  selectBtn.addEventListener('click', async () => {
     const { canceled, filePaths } = await dialog.showOpenDialog({
       filters: [{ name: 'Audio Files', extensions: ['mp3'] }],
       properties: ['openFile']
@@ -88,17 +111,16 @@ document.addEventListener('DOMContentLoaded', () => {
     sendToPlayer(`load ${safeFilePath}`);
     setTrackLabel(filePath);
     isPaused = false;
-    updatePauseButtonText();
-  });
-
-  pauseToggleBtn.addEventListener('click', () => {
-    if (!playerProcess) return;
-    sendToPlayer(isPaused ? 'resume' : 'pause');
+    updatePlayPauseButton();
   });
 
   stopBtn.addEventListener('click', () => {
     if (!playerProcess) return;
     sendToPlayer('stop');
+  });
+
+  quitBtn.addEventListener('click', () => {
+    window.close();
   });
 
   window.addEventListener('beforeunload', () => {
@@ -108,9 +130,4 @@ document.addEventListener('DOMContentLoaded', () => {
       playerProcess = null;
     }
   });
-
-  quitBtn.addEventListener('click', () => {
-    window.close();
-  });
-
 });
