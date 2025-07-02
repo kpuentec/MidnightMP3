@@ -53,6 +53,15 @@ while True:
             paused = False
             print("STOPPED", flush=True)
 
+        elif command.startswith("volume "):
+            try:
+                volume = int(command.split()[1])
+                volume = max(0, min(volume, 100))
+                pygame.mixer.music.set_volume(volume / 100.0)
+                print(f"VOLUME SET TO {volume}", flush=True)
+            except Exception as e:
+                print(f"VOLUME ERROR: {e}", flush=True)
+
         clock.tick(10)
 
     except Exception as e:

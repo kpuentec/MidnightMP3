@@ -5,25 +5,12 @@ const path = require('path');
 let playerProcess = null;
 let isPaused = false;
 
-const trackLabel = document.getElementById('trackLabel');
 const playPauseBtn = document.getElementById('playPauseBtn');
 const selectBtn = document.getElementById('selectBtn');
 const stopBtn = document.getElementById('stopBtn');
 const quitBtn = document.getElementById('quitBtn');
+const volumeSlider = document.getElementById('volumeSlider');
 
-function autoResizeTrackLabel() {
-  const label = document.getElementById('trackLabel');
-  const maxFontSize = 32;
-  const minFontSize = 12;
-  let fontSize = maxFontSize;
-
-  label.style.fontSize = fontSize + 'px';
-
-  while (label.scrollWidth > label.clientWidth && fontSize > minFontSize) {
-    fontSize--;
-    label.style.fontSize = fontSize + 'px';
-  }
-}
 
 function sendToPlayer(command) {
   if (playerProcess && playerProcess.stdin.writable) {
@@ -33,19 +20,18 @@ function sendToPlayer(command) {
 
 function setTrackLabel(filepath) {
   if (!filepath) {
-    trackLabel.textContent = 'No music selected';
+    updateTrackLabel('No music selected');
   } else {
-    trackLabel.textContent = path.basename(filepath, path.extname(filepath));
+    const songName = path.basename(filepath, path.extname(filepath));
+    updateTrackLabel(songName);
   }
-
-  autoResizeTrackLabel();
 }
 
 function updatePlayPauseButton() {
   if (!playerProcess || isPaused) {
-    playPauseBtn.style.backgroundImage = "url('assets/playbutton1.png')";
+    playPauseBtn.style.backgroundImage = "url('assets/pixelresume1.png')";
   } else {
-    playPauseBtn.style.backgroundImage = "url('assets/pausebutton2.png')";
+    playPauseBtn.style.backgroundImage = "url('assets/pixelpause1.png')";
   }
 }
 
@@ -119,6 +105,12 @@ document.addEventListener('DOMContentLoaded', () => {
     sendToPlayer('stop');
   });
 
+  volumeSlider.addEventListener('change', () => {
+    const volumeValue = parseInt(volumeSlider.value, 10);
+    sendToPlayer(`volume ${volumeValue}`);
+  });
+
+
   quitBtn.addEventListener('click', () => {
     window.close();
   });
@@ -131,3 +123,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 });
+
+function updateTrackLabel(text) {
+  const trackLabel = document.getElementById('trackLabel');
+  const scrollingText = trackLabel.querySelector('.scrolling-text');
+
+  scrollingText.textContent = text;
+  scrollingText.style.animation = 'none';
+
+  const containerWidth = trackLabel.clientWidth;
+  const textWidth = scrollingText.scrollWidth;
+
+  const totalDistance = containerWidth + textWidth;
+
+  const speed = 60; 
+
+  const duration = totalDistance / speed;
+  scrollingText.style.animation = `scroll-left ${duration}s linear infinite`;
+}

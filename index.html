@@ -7,19 +7,26 @@
   <title>Midnight MP3</title>
 </head>
 <body>
-
+  
   <div id="titlebar">
     <span>Midnight MP3</span>
     <button id="quitBtn" title="Quit">✕</button>
   </div>
 
-  <h2 id="trackLabel">No music selected</h2>
+  <h2 id="trackLabel">
+    <div class="scrolling-text">No music selected</div>
+  </h2>
 
   <button id="playPauseBtn" title="Play/Pause"></button>
 
   <div id="bottomButtons">
     <button id="selectBtn">Select Music</button>
     <button id="stopBtn">Stop</button>
+  </div>
+
+  <div id="volumeControl">
+    <label for="volumeSlider">Volume</label>
+    <input type="range" id="volumeSlider" min="0" max="100" value="100">
   </div>
 
   <footer>2025</footer>

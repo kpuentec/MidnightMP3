@@ -5,22 +5,37 @@
 }
 
 
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  max-width: 100vw;
+  max-height: 100vh;
+}
+
 body {
   margin: 0;
   font-family: 'Lato', sans-serif;
-  background: url('assets/background.png') no-repeat center center fixed;
-  background-size: cover;
   position: relative;
   overflow-x: hidden;
+  background: none;
 }
 
 body::before {
   content: "";
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(255, 255, 255, 0.1);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('assets/background.png');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-color: rgba(0, 0, 0, 0.6);
+  background-blend-mode: overlay;
+  z-index: -1;
   pointer-events: none;
-  z-index: 0;
 }
 
 #titlebar {
@@ -74,25 +89,42 @@ body::before {
 
 #trackLabel {
   position: relative;
-  margin: 50px auto 30px auto;
+  margin: 60px auto 30px auto;
   background-color: #3a0ca3;
   border: 2px solid black;
-  border-radius: 0;
+  border-radius: 6px;
   color: white;
-  padding: 40px 40px;
-  font-size: clamp(1rem, 5vw, 2rem);
-  width: fit-content;
+  padding: 20px 30px;
   max-width: 70vw;
-  max-height: 300px;
+  width: fit-content;
+  box-sizing: border-box;
+
+  font-size: clamp(1rem, 3vw, 2rem);
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
   text-align: center;
-  z-index: 1;
+
   font-family: 'Pixelify Sans', 'Lato', sans-serif;
   font-weight: 600;
   font-optical-sizing: auto;
-  border-radius: 6px;
+  z-index: 1;
+}
+
+.scrolling-text {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+  position: relative;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-125%);
+  }
 }
 
 #playPauseBtn {
@@ -102,7 +134,7 @@ body::before {
   width: 100px;
   height: 100px;
   border: none;
-  background: url('assets/play.png') no-repeat center center;
+  background: url('assets/pixelresume1.png') no-repeat center center;
   background-size: contain;
   cursor: pointer;
   z-index: 2;
@@ -122,7 +154,7 @@ body::before {
 
 #bottomButtons button {
   background-color: #4848c9;
-  border: 2px solid black;
+  border: 4px solid black;
   color: white;
   padding: 10px 20px;
   font-family: 'Pixelify Sans', 'Lato', sans-serif;
@@ -152,6 +184,51 @@ footer {
   user-select: none;
 }
 
+#volumeControl {
+  position: relative;
+  width: fit-content;
+  margin: 10px auto 30px auto;
+  text-align: center;
+  font-family: 'Pixelify Sans', 'Lato', sans-serif;
+  color: white;
+}
+
+#volumeControl label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+}
+
+#volumeSlider {
+  -webkit-appearance: none;
+  width: 200px;
+  height: 6px;
+  background: #4848c9;
+  border-radius: 4px;
+  outline: none;
+  transition: background 0.3s;
+}
+
+#volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
+#volumeSlider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid black;
+}
+
 .lato-light {
   font-family: 'Lato', sans-serif;
   font-weight: 300;
@@ -176,3 +253,4 @@ footer {
   font-weight: 600;
   font-style: normal;
 }
+
