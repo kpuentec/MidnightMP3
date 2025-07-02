@@ -200,7 +200,7 @@ footer {
 }
 
 #volumeSlider {
-  -webkit-appearance: none;
+  appearance: none;
   width: 200px;
   height: 6px;
   background: #4848c9;
