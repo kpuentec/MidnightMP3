@@ -1,6 +1,6 @@
 # MidnightMP3
 
-**MidnightMP3** is a minimal, stylized MP3 player built with **Electron**, featuring a custom UI, Python-powered audio playback, and smooth animated track titles. It's designed to be lightweight, fast, and highly extensiblem making it ideal for integration into AI workflows or creative tools.
+**MidnightMP3** is a minimal, stylized MP3 player built with **Electron**, featuring a custom UI, Python-powered audio playback, and smooth animated track titles. It's designed to be lightweight, fast, and highly extensible making it ideal for integration into AI workflows or creative tools.
 
 ---
 
