@@ -45,14 +45,69 @@
 
 MidnightMP3/
 ├── assets/              # Images (background, play/pause icons)
+
 ├── index.html           # Main UI structure
+
 ├── styles.css           # Custom styling
+
 ├── renderer.js          # Frontend logic (button handling, text scrolling)
+
 ├── main.js              # Electron main process
+
 ├── player.py            # Python audio engine using pygame
+
 ├── package.json         # App metadata and dependencies
+
 ├── package-lock.json
+
 ├── node_modules/
-├── .gitignore           
+
+├── .gitignore     
+
 ├── LICENSE
 
+---
+### Purpose
+
+MidnightMP3 was designed with a broader vision: as a component in AI-powered tools, desktop agents, and creative automation environments.
+
+Future AI agents could potentially:
+
+* Speak track info using TTS
+
+*  Fetch song lyrics via AI APIs
+
+*  Auto-play curated playlists based on mood or prompt
+
+*  Adapt UI dynamically using generative design
+
+---
+### Planned Features
+
+* Skip / Next Track
+
+* Looping / Repeat Modes
+
+* Playlist support
+
+* Drag-and-drop file loading
+
+* Voice control integration
+
+* AI playlist generation
+
+* Optional album art view
+
+---
+### Credits
+
+Tools Used:
+
+* Electron
+* pygame
+* Google Fonts
+
+---
+### License
+
+This project is licensed under the MIT License — see LICENSE for details. (2025)
