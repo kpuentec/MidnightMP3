@@ -44,7 +44,8 @@
 ### File Structure
 
 MidnightMP3/
-├── assets/              # Images (background, play/pause icons)
+
+assets/              # Images (background, play/pause icons)
 
 ├── index.html           # Main UI structure
 
@@ -60,7 +61,7 @@ MidnightMP3/
 
 ├── package-lock.json
 
-├── node_modules/
+node_modules/
 
 ├── .gitignore     
 
